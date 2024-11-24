@@ -1,6 +1,7 @@
 source "https://rubygems.org"
 
 gem "bootsnap", require: false
+gem "devise", "~> 4.9"
 gem "importmap-rails"
 gem "jbuilder"
 gem "pg", "~> 1.1"
@@ -29,8 +30,10 @@ group :development, :test do
   gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
   gem "factory_bot_rails"
   gem "faker"
+  gem "pry-byebug"
   gem "rspec-rails", "~> 7.0.0"
   gem "rubocop-rails-omakase", require: false
+  gem "shoulda-matchers", "~> 6.0"
 end
 
 group :development do
@@ -40,6 +43,5 @@ end
 group :test do
   gem "database_cleaner-active_record"
   gem "rspec-its"
-  gem "shoulda-matchers", "~> 6.0"
   gem "simplecov", require: false
 end
