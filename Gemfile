@@ -16,6 +16,7 @@ gem "tailwindcss-rails"
 gem "thruster", require: false
 gem "turbo-rails"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
+gem "view_component"
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 gem "solid_cable"
@@ -44,6 +45,7 @@ group :development do
 end
 
 group :test do
+  gem "capybara"
   gem "database_cleaner-active_record"
   gem "rspec-its"
   gem "simplecov", require: false
