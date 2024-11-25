@@ -1,9 +1,9 @@
 class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
-  devise :rememberable, :trackable
+  # , :trackable
+  devise :rememberable
 
-  validates_presence_of :email
-  validates_uniqueness_of :email, case_sensitive: true
-  validates_format_of :email, with: URI::MailTo::EMAIL_REGEXP
+  validates_presence_of :steam_uid, :nickname, :avatar_url
+  validates_uniqueness_of :steam_uid
 end

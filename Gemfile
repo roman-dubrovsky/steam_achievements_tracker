@@ -4,10 +4,13 @@ gem "bootsnap", require: false
 gem "devise", "~> 4.9"
 gem "importmap-rails"
 gem "jbuilder"
+gem "omniauth-rails_csrf_protection"
+gem "omniauth-steam"
 gem "pg", "~> 1.1"
 gem "propshaft" # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "puma", ">= 5.0"
 gem "rails", "~> 8.0.0"
+gem "rexml"
 gem "stimulus-rails"
 gem "tailwindcss-rails"
 gem "thruster", require: false

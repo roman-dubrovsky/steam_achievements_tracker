@@ -1,5 +1,7 @@
 FactoryBot.define do
   factory :user do
-    email { Faker::Internet.email }
+    steam_uid { Faker::Crypto.md5 }
+    nickname { Faker::Name.name }
+    avatar_url { Faker::Internet.url }
   end
 end

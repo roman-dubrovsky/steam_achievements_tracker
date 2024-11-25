@@ -1,0 +1,6 @@
+<% if current_user.present? %>
+  <h1> Hello, <%= current_user.nickname %> </h1>
+  <%= button_to 'Logout', logout_path, method: :delete %>
+<% else %>
+  <%= button_to 'Sign in with Steam', '/auth/steam' %>
+<% end %>

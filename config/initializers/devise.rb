@@ -248,7 +248,13 @@ Devise.setup do |config|
 
   # Configure the default scope given to Warden. By default it's the first
   # devise role declared in your routes (usually :user).
-  # config.default_scope = :user
+  config.default_scope = :user
+
+  config.warden do |manager|
+    manager.default_scope = :user
+    manager.scope_defaults :user, strategies: [ :rememberable ]
+    # manager.scope_defaults :user, strategies: [:rememberable, :trackable]
+  end
 
   # Set this configuration to false if you want /users/sign_out to sign out
   # only the current scope. By default, Devise signs out all scopes.

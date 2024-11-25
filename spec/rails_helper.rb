@@ -70,4 +70,10 @@ RSpec.configure do |config|
   # config.filter_gems_from_backtrace("gem name")
 
   config.include FactoryBot::Syntax::Methods
+  config.include Devise::Test::IntegrationHelpers, type: :request
+
+  config.before(:each, type: :request) do
+    # Issue: https://github.com/heartcombo/devise/issues/5705
+    Rails.application.routes_reloader.execute_unless_loaded
+  end
 end
