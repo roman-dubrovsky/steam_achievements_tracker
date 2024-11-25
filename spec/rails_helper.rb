@@ -12,6 +12,7 @@ require 'rspec/its'
 require "view_component/test_helpers"
 require "view_component/system_test_helpers"
 require "capybara/rspec"
+require 'webmock/rspec'
 # Add additional requires below this line. Rails is not loaded until this point!
 
 Dir[Rails.root.join('spec/support/**/*.rb')].each { |f| require f }

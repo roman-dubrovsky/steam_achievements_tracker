@@ -11,6 +11,7 @@ gem "propshaft" # The modern asset pipeline for Rails [https://github.com/rails/
 gem "puma", ">= 5.0"
 gem "rails", "~> 8.0.0"
 gem "rexml"
+gem "simple_form"
 gem "stimulus-rails"
 gem "tailwindcss-rails"
 gem "thruster", require: false
@@ -49,4 +50,5 @@ group :test do
   gem "database_cleaner-active_record"
   gem "rspec-its"
   gem "simplecov", require: false
+  gem "webmock"
 end

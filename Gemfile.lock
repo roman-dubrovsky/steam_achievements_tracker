@@ -101,6 +101,9 @@ GEM
     coderay (1.1.3)
     concurrent-ruby (1.3.4)
     connection_pool (2.4.1)
+    crack (1.0.0)
+      bigdecimal
+      rexml
     crass (1.0.6)
     database_cleaner-active_record (2.2.0)
       activerecord (>= 5.a)
@@ -136,6 +139,7 @@ GEM
       raabro (~> 1.4)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    hashdiff (1.1.2)
     hashie (5.0.0)
     i18n (1.14.6)
       concurrent-ruby (~> 1.0)
@@ -347,6 +351,9 @@ GEM
     securerandom (0.3.2)
     shoulda-matchers (6.4.0)
       activesupport (>= 5.2.0)
+    simple_form (5.3.1)
+      actionpack (>= 5.2)
+      activemodel (>= 5.2)
     simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -408,6 +415,10 @@ GEM
       activemodel (>= 6.0.0)
       bindex (>= 0.4.0)
       railties (>= 6.0.0)
+    webmock (3.24.0)
+      addressable (>= 2.8.0)
+      crack (>= 0.3.2)
+      hashdiff (>= 0.4.0, < 2.0.0)
     websocket-driver (0.7.6)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.5)
@@ -444,6 +455,7 @@ DEPENDENCIES
   rspec-rails (~> 7.0.0)
   rubocop-rails-omakase
   shoulda-matchers (~> 6.0)
+  simple_form
   simplecov
   solid_cable
   solid_cache
@@ -455,6 +467,7 @@ DEPENDENCIES
   tzinfo-data
   view_component
   web-console
+  webmock
 
 BUNDLED WITH
    2.5.23
