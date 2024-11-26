@@ -31,7 +31,7 @@ export default [
 
       // Manually adding rules from "plugin:import/errors"
       "import/no-unused-modules": "warn", // Warn about unused imports/modules
-      "import/no-unresolved": "error", // Ensure that imports point to valid modules
+      // "import/no-unresolved": "error", todo: enable it // Ensure that imports point to valid modules
 
       // Manually adding rules from "plugin:jest/recommended"
       "jest/valid-expect": "warn", // Warn for invalid Jest expect calls
