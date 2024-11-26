@@ -12,12 +12,12 @@
                 <%= image_tag(avatar_url, alt: nickname, class: "w-full h-full object-cover") %>
               </div>
               <span class="mx-2"> <%= nickname %> </span>
-              <%= render Buttons::SteamComponent.new(path: logout_path, method: :delete) do %>
+              <%= render Ui::Buttons::SteamComponent.new(path: logout_path, method: :delete) do %>
                 <%= t('.logout') %>
               <% end %>
             </div>
           <% else %>
-            <%= render Buttons::SteamComponent.new(path: '/auth/steam') do %>
+            <%= render Ui::Buttons::SteamComponent.new(path: '/auth/steam') do %>
               <%= render Icons::SteamComponent.new %>
               <span class="ml-2"> 
                 <%= t('.signin') %>
