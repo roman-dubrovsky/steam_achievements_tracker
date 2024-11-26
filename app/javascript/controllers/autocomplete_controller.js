@@ -18,7 +18,7 @@ export default class extends Controller {
     }
 
     const filteredGames = this.games.filter((game) =>
-      game.name.toLowerCase().includes(query)
+      game.name.toLowerCase().includes(query),
     );
 
     if (filteredGames.length === 0) {
@@ -31,12 +31,7 @@ export default class extends Controller {
     filteredGames.forEach((game) => {
       const li = document.createElement("li");
       li.textContent = game.name;
-      li.classList.add(
-        "p-2",
-        "hover:bg-gray-100",
-        "cursor-pointer",
-        "text-sm"
-      );
+      li.classList.add("p-2", "hover:bg-gray-100", "cursor-pointer", "text-sm");
       li.dataset.value = game.appid;
       li.dataset.action = "click->autocomplete#selectGame";
       this.listTarget.appendChild(li);

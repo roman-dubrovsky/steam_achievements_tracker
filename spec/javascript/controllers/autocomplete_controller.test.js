@@ -39,7 +39,7 @@ describe("AutocompleteController", () => {
   test("initializes with games data", () => {
     const controller = application.getControllerForElementAndIdentifier(
       document.querySelector("[data-controller='autocomplete']"),
-      "autocomplete"
+      "autocomplete",
     );
 
     expect(controller).toBeDefined();
@@ -64,7 +64,9 @@ describe("AutocompleteController", () => {
 
   test("updates hidden field when selecting a game", async () => {
     const input = document.querySelector("[data-autocomplete-target='input']");
-    const select = document.querySelector("[data-autocomplete-target='select']");
+    const select = document.querySelector(
+      "[data-autocomplete-target='select']",
+    );
     const list = document.querySelector("[data-autocomplete-target='list']");
 
     input.value = "Game 1";
