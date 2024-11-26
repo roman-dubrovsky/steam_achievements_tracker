@@ -1,6 +1,6 @@
 import { Application } from "@hotwired/stimulus";
 import AutocompleteController from "controllers/autocomplete_controller";
-import { screen, fireEvent, waitFor } from "@testing-library/dom";
+import { fireEvent, waitFor } from "@testing-library/dom";
 
 describe("AutocompleteController", () => {
   let application;
