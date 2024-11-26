@@ -1,0 +1,5 @@
+<%= simple_form_for @game, url: games_path do |f| %>
+  <%= render Games::SelectComponent.new(form: f, attribute: :app_uid, games: @games) %>
+
+  <%= f.submit "Submit", class: "bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 mt-4" %>
+<% end %>

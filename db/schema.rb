@@ -10,9 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_25_100125) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_26_014502) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "games", force: :cascade do |t|
+    t.string "app_uid"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["app_uid"], name: "index_games_on_app_uid", unique: true
+  end
 
   create_table "users", force: :cascade do |t|
     t.datetime "remember_created_at"

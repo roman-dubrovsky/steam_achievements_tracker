@@ -1,0 +1,22 @@
+<div 
+  class="relative w-full"
+  data-controller="autocomplete" 
+  data-autocomplete-target="container" 
+  data-autocomplete-games="<%= games.to_json %>"
+>
+
+  <%= form.input attribute, as: :hidden, input_html: { data: { autocomplete_target: "select" } } %>
+
+  <input 
+    type="text" 
+    placeholder="Search for a game..." 
+    class="form-input w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+    data-action="input->autocomplete#search"
+    data-autocomplete-target="input"
+  />
+
+  <ul 
+    class="absolute bg-white border border-gray-300 mt-1 w-full rounded-lg shadow-lg z-10 hidden"
+    data-autocomplete-target="list">
+  </ul>
+</div>
