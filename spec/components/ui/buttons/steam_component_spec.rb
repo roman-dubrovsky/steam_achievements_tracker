@@ -1,4 +1,4 @@
-RSpec.describe Buttons::SteamComponent, type: :component do
+RSpec.describe Ui::Buttons::SteamComponent, type: :component do
   let(:path) { "/test_path" }
   let(:method) { :delete }
   let(:content) { "Click Me" }
