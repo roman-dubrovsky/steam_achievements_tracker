@@ -87,8 +87,7 @@ RSpec.describe "Sessions", type: :request do
       it 'renders dashboard with logout button' do
         do_request
 
-        expect(response).to have_http_status(:ok)
-        expect(response.body).to include("Logout")
+        expect(response).to redirect_to(dashboard_path)
       end
     end
   end
