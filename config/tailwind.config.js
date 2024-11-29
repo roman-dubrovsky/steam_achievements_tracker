@@ -17,10 +17,14 @@ module.exports = {
       pink: "#ff49db",
       orange: "#ff7849",
       green: "#13ce66",
+      lightgreen: {
+        500: "#c5ef80",
+      },
       yellow: "#ffc82c",
       gray: {
         200: "#d3dce6",
         500: "#8492a6",
+        600: "#313840",
         700: "#273444",
         800: "#2b3038",
         900: "#20242a",
@@ -29,6 +33,9 @@ module.exports = {
     extend: {
       fontFamily: {
         sans: ["Inter var", ...defaultTheme.fontFamily.sans],
+      },
+      opacity: {
+        85: "0.85",
       },
     },
   },

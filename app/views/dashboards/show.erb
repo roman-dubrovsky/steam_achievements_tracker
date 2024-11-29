@@ -1,3 +1,5 @@
 <div data-controller="hello"></div>
 
-<%= link_to "Add game", new_games_path %>
+<%= render Ui::Buttons::SecondaryComponent.new(path: new_games_path, method: :get) do %>
+  Add game
+<% end %>
