@@ -10,9 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_11_26_014502) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_29_222728) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "game_users", force: :cascade do |t|
+    t.bigint "user_id", null: false
+    t.bigint "game_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_game_users_on_game_id"
+    t.index ["user_id"], name: "index_game_users_on_user_id"
+  end
 
   create_table "games", force: :cascade do |t|
     t.string "app_uid"
@@ -35,4 +44,7 @@ ActiveRecord::Schema[8.0].define(version: 2024_11_26_014502) do
     t.string "avatar_url"
     t.index ["steam_uid"], name: "index_users_on_steam_uid", unique: true
   end
+
+  add_foreign_key "game_users", "games"
+  add_foreign_key "game_users", "users"
 end
