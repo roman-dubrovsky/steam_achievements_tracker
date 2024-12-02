@@ -1,0 +1,9 @@
+<% if get? %>
+  <%= link_to path, class: "w-fit py-2 px-4 rounded-xl flex justify-between items-center #{styles}"  do %>
+    <%= content %>
+  <% end %>
+<% else %>
+  <%= button_to path, method: method, class: "py-2 px-4 rounded-xl flex justify-between items-center #{styles}"  do %>
+    <%= content %>
+  <% end %>
+<% end %>

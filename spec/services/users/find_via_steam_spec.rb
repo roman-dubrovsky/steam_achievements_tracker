@@ -1,5 +1,3 @@
-require 'rails_helper'
-
 RSpec.describe Users::FindViaSteam do
   subject(:service_call) { described_class.call(auth) }
 

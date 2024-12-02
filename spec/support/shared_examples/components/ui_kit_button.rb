@@ -1,4 +1,4 @@
-RSpec.describe Buttons::SteamComponent, type: :component do
+RSpec.shared_examples "UIkits button" do |specific_classes|
   let(:path) { "/test_path" }
   let(:method) { :delete }
   let(:content) { "Click Me" }
@@ -17,7 +17,7 @@ RSpec.describe Buttons::SteamComponent, type: :component do
 
   it "applies the correct CSS classes" do
     expect(subject).to have_css(
-      "button.bg-black.py-2.px-4.uppercase.rounded-xl.flex.justify-between.items-center.text-white.hover\\:bg-gray-800"
+      "button.py-2.px-4.rounded-xl.flex.justify-between.items-center.#{specific_classes}"
     )
   end
 
