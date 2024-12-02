@@ -37,6 +37,9 @@ module.exports = {
       opacity: {
         85: "0.85",
       },
+      height: {
+        300: "300px",
+      },
     },
   },
   plugins: [

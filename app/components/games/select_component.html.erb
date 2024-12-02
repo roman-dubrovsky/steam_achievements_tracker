@@ -1,5 +1,5 @@
 <div 
-  class="relative w-full"
+  class="relative w-full text-black"
   data-controller="autocomplete" 
   data-autocomplete-target="container" 
   data-autocomplete-games="<%= games.to_json %>"
@@ -16,7 +16,7 @@
   />
 
   <ul 
-    class="absolute bg-white border border-gray-300 mt-1 w-full rounded-lg shadow-lg z-10 hidden"
+    class="absolute bg-white border border-gray-300 mt-1 w-full rounded-lg shadow-lg z-10 hidden overflow-auto h-300"
     data-autocomplete-target="list">
   </ul>
 </div>
