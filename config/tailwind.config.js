@@ -40,6 +40,9 @@ module.exports = {
       height: {
         300: "300px",
       },
+      maxWidth: {
+        r50: "50rem",
+      },
     },
   },
   plugins: [

@@ -2,7 +2,7 @@ RSpec.describe BodyComponent, type: :component do
   let(:content) { "This is the dynamic content." }
 
   subject(:rendered_component) do
-    render_inline(BodyComponent.new) do
+    render_inline(described_class.new) do
       content
     end
   end

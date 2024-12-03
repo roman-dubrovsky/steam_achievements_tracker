@@ -1,2 +1,8 @@
 en:
   title: Steam Achievements Tracker
+  back: Back
+
+  games:
+    new:
+      title: Add new game
+      no_games: Sorry, there are not games which can be added for tracking.
