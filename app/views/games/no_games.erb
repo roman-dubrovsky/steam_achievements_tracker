@@ -1,0 +1,7 @@
+<div class="mb-2">
+  <%= I18n.t("games.new.no_games") %>
+</div>
+
+<%= render Ui::Buttons::SecondaryComponent.new(path: :back, method: :get) do %>
+  <%= I18n.t("back") %>
+<% end %>
