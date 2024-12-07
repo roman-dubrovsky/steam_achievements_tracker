@@ -6,6 +6,20 @@ export default class extends Controller {
   connect() {
     this.games = JSON.parse(this.data.get("games") || "[]");
     this.listTarget.classList.add("hidden");
+    this.resetInput();
+  }
+
+  resetInput() {
+    const game = this.games.find(
+      (element) => element.appid === this.selectTarget.value,
+    );
+
+    if (game) {
+      this.inputTarget.value = game.name;
+      this.selectTarget.value = game.appid;
+    } else {
+      this.selectTarget.value = "";
+    }
   }
 
   search(event) {
@@ -45,5 +59,11 @@ export default class extends Controller {
     this.inputTarget.value = gameName;
     this.listTarget.classList.add("hidden");
     this.selectTarget.value = appid;
+  }
+
+  clearHiddenField(event) {
+    if (event.target.value.trim() === "") {
+      this.selectTarget.value = "";
+    }
   }
 }

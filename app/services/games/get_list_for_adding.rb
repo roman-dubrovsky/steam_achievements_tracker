@@ -23,7 +23,7 @@ class Games::GetListForAdding
     @_steam_info ||= Steam::ApiClient.new(user).games
       .map do |info|
         {
-          "appid" => info["appid"],
+          "appid" => info["appid"].to_s,
           "name" => info["name"]
         }
       end

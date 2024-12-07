@@ -29,6 +29,11 @@ module.exports = {
         800: "#2b3038",
         900: "#20242a",
       },
+      red: {
+        100: "#FEE2E2",
+        400: "#F87171",
+        700: "#B91C1C",
+      },
     },
     extend: {
       fontFamily: {
@@ -37,7 +42,7 @@ module.exports = {
       opacity: {
         85: "0.85",
       },
-      height: {
+      maxHeight: {
         300: "300px",
       },
       maxWidth: {

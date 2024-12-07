@@ -11,12 +11,12 @@
     type="text" 
     placeholder="Search for a game..." 
     class="form-input w-full border border-gray-300 rounded-lg p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-    data-action="input->autocomplete#search"
+    data-action="input->autocomplete#search input->autocomplete#clearHiddenField"
     data-autocomplete-target="input"
   />
 
   <ul 
-    class="absolute bg-white border border-gray-300 mt-1 w-full rounded-lg shadow-lg z-10 hidden overflow-auto h-300"
+    class="absolute bg-white border border-gray-300 mt-1 w-full rounded-lg shadow-lg z-10 hidden overflow-auto max-h-300"
     data-autocomplete-target="list">
   </ul>
 </div>

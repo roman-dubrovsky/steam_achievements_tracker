@@ -4,29 +4,30 @@ import { fireEvent, waitFor } from "@testing-library/dom";
 
 describe("AutocompleteController", () => {
   let application;
+  let body = `
+    <div
+      data-controller="autocomplete"
+      data-autocomplete-target="container"
+      data-autocomplete-games='[{"appid":"1","name":"Game 1"},{"appid":"2","name":"Game 2"}]'
+    >
+      <input 
+        type="text" 
+        data-autocomplete-target="input" 
+        data-action="input->autocomplete#search input->autocomplete#clearHiddenField" 
+      />
+      <input 
+        type="hidden" 
+        data-autocomplete-target="select" 
+      />
+      <ul 
+        data-autocomplete-target="list" 
+        class="hidden"
+      ></ul>
+    </div>
+  `;
 
   beforeEach(() => {
-    document.body.innerHTML = `
-      <div
-        data-controller="autocomplete"
-        data-autocomplete-target="container"
-        data-autocomplete-games='[{"appid":1,"name":"Game 1"},{"appid":2,"name":"Game 2"}]'
-      >
-        <input 
-          type="text" 
-          data-autocomplete-target="input" 
-          data-action="input->autocomplete#search" 
-        />
-        <input 
-          type="hidden" 
-          data-autocomplete-target="select" 
-        />
-        <ul 
-          data-autocomplete-target="list" 
-          class="hidden"
-        ></ul>
-      </div>
-    `;
+    document.body.innerHTML = body;
 
     application = Application.start();
     application.register("autocomplete", AutocompleteController);
@@ -44,8 +45,8 @@ describe("AutocompleteController", () => {
 
     expect(controller).toBeDefined();
     expect(controller.games).toEqual([
-      { appid: 1, name: "Game 1" },
-      { appid: 2, name: "Game 2" },
+      { appid: "1", name: "Game 1" },
+      { appid: "2", name: "Game 2" },
     ]);
   });
 
@@ -84,5 +85,55 @@ describe("AutocompleteController", () => {
     });
 
     expect(input.value).toBe("Game 1");
+  });
+
+  describe("when some value were passed as an value for hidden field", () => {
+    body = `
+      <div
+        data-controller="autocomplete"
+        data-autocomplete-target="container"
+        data-autocomplete-games='[{"appid":"1","name":"Game 1"},{"appid":"2","name":"Game 2"}]'
+      >
+        <input 
+          type="text" 
+          data-autocomplete-target="input" 
+          data-action="input->autocomplete#search input->autocomplete#clearHiddenField" 
+        />
+        <input 
+          type="hidden" 
+          value="1"
+          data-autocomplete-target="select" 
+        />
+        <ul 
+          data-autocomplete-target="list" 
+          class="hidden"
+        ></ul>
+      </div>
+    `;
+
+    test("sets selected item if the game was passed as a parameter", () => {
+      const input = document.querySelector(
+        "[data-autocomplete-target='input']",
+      );
+      expect(input.value).toBe("Game 1");
+    });
+
+    test("remove value from hidden field after clearing the input", async () => {
+      const input = document.querySelector(
+        "[data-autocomplete-target='input']",
+      );
+      const select = document.querySelector(
+        "[data-autocomplete-target='select']",
+      );
+
+      input.value = "";
+      fireEvent.input(input);
+
+      await waitFor(() => {
+        expect(select.value).toBe("");
+      });
+
+      expect(input.value).toBe("");
+    });
   });
 });

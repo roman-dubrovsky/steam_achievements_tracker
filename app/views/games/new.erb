@@ -1,4 +1,5 @@
 <%= render Ui::Containers::FormComponent.new(I18n.t("games.new.title")) do %>
+  <%= render Forms::ErrorNotificationComponent.new(message: @error_message) %>
   <%= simple_form_for @game_form, url: games_path do |f| %>
     <%= render Games::SelectComponent.new(form: f, attribute: :app_uid, games: @game_form.games_list) %>
     <%= render Ui::ButtonsGroup::FormComponent.new(form: f) %>

@@ -18,6 +18,7 @@ class GamesController < ApplicationController
     if result.success
       render plain: result.success.name, status: :created
     else
+      @error_message = result.failure
       render :new, status: :bad_request
     end
   end
