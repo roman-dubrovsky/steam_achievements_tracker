@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 gem "bootsnap", require: false
 gem "devise", "~> 4.9"
+gem "dry-monads"
 gem "importmap-rails"
 gem "jbuilder"
 gem "omniauth-rails_csrf_protection"

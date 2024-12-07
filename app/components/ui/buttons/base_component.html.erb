@@ -1,0 +1,11 @@
+<% if form? %>
+  <%= path.button :button, content.strip, class: button_classes %>
+<% elsif get? %>
+  <%= link_to path, class: button_classes  do %>
+    <%= content %>
+  <% end %>
+<% else %>
+  <%= button_to path, method: method, class: button_classes do %>
+    <%= content %>
+  <% end %>
+<% end %>
