@@ -34,6 +34,9 @@ module.exports = {
         400: "#F87171",
         700: "#B91C1C",
       },
+      darkblue: {
+        500: "#16202D",
+      },
     },
     extend: {
       fontFamily: {
@@ -47,6 +50,9 @@ module.exports = {
       },
       maxWidth: {
         r50: "50rem",
+      },
+      width: {
+        logo: "30rem",
       },
     },
   },

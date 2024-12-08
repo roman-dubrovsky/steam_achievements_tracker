@@ -1,4 +1,8 @@
 class GamesController < ApplicationController
+  def index
+    @games = Game.all
+  end
+
   def new
     @game_form = Games::AddForm.new(current_user)
 

@@ -2,7 +2,7 @@
   <nav class="col-span-1 md:col-span-1 p-4">
     <ul>
       <%= render Layout::NavigationButtonComponent.new("Dashboard", path: dashboard_path) %>
-      <%= render Layout::NavigationButtonComponent.new("Games") %>
+      <%= render Layout::NavigationButtonComponent.new("Games", path: games_path) %>
       <%= render Layout::NavigationButtonComponent.new("Sessions") %>
     </ul>
   </nav>

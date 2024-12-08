@@ -12,7 +12,7 @@ RSpec.describe BodyComponent, type: :component do
       "<li>Dashboard Navigation Link</li>"
     end
 
-    mock_component(Layout::NavigationButtonComponent, "Games") do
+    mock_component(Layout::NavigationButtonComponent, "Games", path: "/games") do
       "<li>Games Navigation Link</li>"
     end
 

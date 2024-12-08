@@ -1,6 +1,36 @@
 require 'rails_helper'
 
 RSpec.describe "Games", type: :request do
+  describe "Get /games" do
+    subject(:do_request) { get "/games" }
+
+    let(:user) { create(:user) }
+
+    before do
+        sign_in user if user.present?
+      end
+
+    context 'when the user is logged in' do
+      # Todo: Add tests
+
+      it "renders the page" do
+        do_request
+
+        expect(response).to have_http_status(:ok)
+      end
+    end
+
+    context 'when the user in not logged in' do
+      let(:user) { nil }
+
+      it 'renders dashboard with logout button' do
+        do_request
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+  end
+
   describe "GET /games/new" do
     subject(:do_request) { get "/games/new" }
 
