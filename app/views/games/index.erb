@@ -1,3 +1,5 @@
 <% @games.each do |game| %>
   <%= render Game::CardComponent.new(game) %>
 <% end %>
+
+<%= render Ui::PaginationComponent.new(@games) %>

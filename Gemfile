@@ -19,6 +19,7 @@ gem "thruster", require: false
 gem "turbo-rails"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "view_component"
+gem "will_paginate", "~> 4.0"
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 gem "solid_cable"
