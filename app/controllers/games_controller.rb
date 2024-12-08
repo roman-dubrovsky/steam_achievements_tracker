@@ -28,7 +28,16 @@ class GamesController < ApplicationController
     end
   end
 
+  def accept
+    Games::AddToUser.call(game, current_user)
+    redirect_to games_path
+  end
+
   private
+
+  def game
+    @_game ||= Game.find(params[:id])
+  end
 
   def game_params
     params.require(:games_add_form).permit(:app_uid)

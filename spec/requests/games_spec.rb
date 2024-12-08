@@ -1,14 +1,14 @@
 require 'rails_helper'
 
 RSpec.describe "Games", type: :request do
-  describe "Get /games" do
+  describe "GET /games" do
     subject(:do_request) { get "/games" }
 
     let(:user) { create(:user) }
 
     before do
-        sign_in user if user.present?
-      end
+      sign_in user if user.present?
+    end
 
     context 'when the user is logged in' do
       # Todo: Add tests
@@ -86,7 +86,7 @@ RSpec.describe "Games", type: :request do
     end
   end
 
-  describe "Post /games" do
+  describe "POST /games" do
     subject(:do_request) { post "/games", params: { games_add_form: games_params } }
 
     let(:games_params) do
@@ -221,6 +221,51 @@ RSpec.describe "Games", type: :request do
     end
 
     context 'when the user is not logged in' do
+      let(:user) { nil }
+
+      it 'renders dashboard with logout button' do
+        do_request
+
+        expect(response).to redirect_to(root_path)
+      end
+    end
+  end
+
+  describe "POST /games/:id/accept" do
+    subject(:do_request) { post "/games/#{game_id}/accept" }
+
+    let(:user) { create(:user) }
+    let(:game) { create(:game) }
+    let(:game_id) { game.id }
+
+    before do
+      sign_in user if user.present?
+    end
+
+    context 'when game can be added' do
+      it 'redirects to games list path' do
+        do_request
+
+        expect(response).to redirect_to(games_path)
+      end
+
+      it 'adds game for the user' do
+        expect { do_request }.to change { user.reload.games.count }.by(1)
+        expect(user.games.last).to eq game
+      end
+    end
+
+    context 'when the game is not found' do
+      let(:game_id) { 'fake' }
+
+      it 'renders dashboard with logout button' do
+        do_request
+
+        expect(response).to have_http_status(:not_found)
+      end
+    end
+
+    context 'when the user in not logged in' do
       let(:user) { nil }
 
       it 'renders dashboard with logout button' do
