@@ -1,6 +1,7 @@
 class GamesController < ApplicationController
   def index
-    @games = Game.all.paginate(page: params[:page])
+    @games = current_user.games
+      .paginate(page: params[:page])
   end
 
   def new

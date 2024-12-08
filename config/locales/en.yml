@@ -16,6 +16,10 @@ en:
   cancel: Cancel
 
   games:
+    index:
+      games: Games
+      new_game: Add new game
+      no_games: You have not added games for tracking yet.
     new:
       title: Add new game
       no_games: Sorry, there are not games which can be added for tracking.

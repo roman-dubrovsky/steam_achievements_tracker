@@ -2,6 +2,6 @@
   <%= render Ui::Headers::MainComponent.new do %>
     <%= I18n.t("games.accept.header_question") %>
   <% end %>
-  <%= render Game::CardComponent.new(@game) %>
+  <%= render Game::CardComponent.new(game: @game) %>
   <%= render Ui::ButtonsGroup::FormComponent.new(path: accept_game_path(@game), back_path: games_path, action: I18n.t("add"), back: I18n.t("cancel")) %>
 </div>

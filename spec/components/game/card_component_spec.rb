@@ -1,5 +1,5 @@
 RSpec.describe Game::CardComponent, type: :component do
-  subject(:rendered_component) { render_inline Game::CardComponent.new(game) }
+  subject(:rendered_component) { render_inline Game::CardComponent.new(game: game) }
 
   let(:game) { create(:game) }
 

@@ -7,7 +7,7 @@ RSpec.describe User do
   end
 
   describe "associations" do
-    it { is_expected.to have_many(:game_users) }
+    it { is_expected.to have_many(:game_users).dependent(:destroy) }
     it { is_expected.to have_many(:games).through(:game_users) }
   end
 end

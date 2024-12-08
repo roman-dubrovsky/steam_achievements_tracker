@@ -1,0 +1,12 @@
+<div class="flex justify-between mb-5">
+  <div>
+    <%= render Ui::Headers::MainComponent.new do %>
+      <%= title %>
+    <% end %>
+  </div>
+  <div>
+    <%= render Ui::Buttons::PrimaryComponent.new(path: button_href, method: :get) do %>
+      <%= button_title %>
+    <% end %>
+  </div>
+</div>

@@ -10,13 +10,44 @@ RSpec.describe "Games", type: :request do
       sign_in user if user.present?
     end
 
-    context 'when the user is logged in' do
-      # Todo: Add tests
+    context 'when the are some games assotiate to the user' do
+      let(:game1) { create(:game) }
+      let(:game2) { create(:game) }
+
+      before do
+        create(:game_user, game: game1, user: user)
+        create(:game_user, game: game2, user: user)
+      end
 
       it "renders the page" do
         do_request
 
         expect(response).to have_http_status(:ok)
+        expect(response.body).to include("Games")
+        expect(response.body).to include("Add new game")
+      end
+
+      it 'renders games title' do
+        do_request
+
+        expect(response.body).to include(game1.name)
+        expect(response.body).to include(game1.name)
+      end
+    end
+
+    context 'when the user does not have any associated games' do
+      it "renders the page" do
+        do_request
+
+        expect(response).to have_http_status(:ok)
+        expect(response.body).to include("Games")
+        expect(response.body).to include("Add new game")
+      end
+
+      it 'renders games title' do
+        do_request
+
+        expect(response.body).to include("You have not added games for tracking yet.")
       end
     end
 
