@@ -1,0 +1,13 @@
+<main class="container mx-auto mt-28 px-5 grid grid-cols-1 md:grid-cols-5 gap-4">
+  <nav class="col-span-1 md:col-span-1 p-4">
+    <ul>
+      <%= render Layout::NavigationButtonComponent.new("Dashboard", path: dashboard_path) %>
+      <%= render Layout::NavigationButtonComponent.new("Games", path: games_path) %>
+      <%= render Layout::NavigationButtonComponent.new("Sessions") %>
+    </ul>
+  </nav>
+
+  <div class="col-span-1 md:col-span-4 p-4">
+    <%= content %>
+  </div>
+</main>

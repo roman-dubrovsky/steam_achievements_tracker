@@ -6,4 +6,7 @@ class User < ApplicationRecord
 
   validates_presence_of :steam_uid, :nickname, :avatar_url
   validates_uniqueness_of :steam_uid
+
+  has_many :game_users, dependent: :destroy
+  has_many :games, through: :game_users
 end

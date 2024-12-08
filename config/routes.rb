@@ -10,4 +10,10 @@ Rails.application.routes.draw do
   post "/auth/:provider/callback", to: "sessions#create"
   delete "logout", to: "sessions#destroy", as: :logout
   get "/auth/failure", to: redirect("/")
+
+  resource :dashboard, only: [ :show ]
+
+  resources :games, only: [ :index, :new, :create ] do
+    post :accept, on: :member
+  end
 end

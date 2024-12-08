@@ -2,6 +2,7 @@ source "https://rubygems.org"
 
 gem "bootsnap", require: false
 gem "devise", "~> 4.9"
+gem "dry-monads"
 gem "importmap-rails"
 gem "jbuilder"
 gem "omniauth-rails_csrf_protection"
@@ -18,6 +19,7 @@ gem "thruster", require: false
 gem "turbo-rails"
 gem "tzinfo-data", platforms: %i[ windows jruby ]
 gem "view_component"
+gem "will_paginate", "~> 4.0"
 
 # Use the database-backed adapters for Rails.cache, Active Job, and Action Cable
 gem "solid_cable"

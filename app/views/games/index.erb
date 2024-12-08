@@ -1,0 +1,13 @@
+<div class="container">
+  <%= render Ui::Headers::TitleWithButtonComponent.new(title: I18n.t("games.index.games"), button_href: new_game_path, button_title: I18n.t("games.index.new_game")) %>
+
+  <% if @games.present? %>
+    <%= render Game::CardComponent.with_collection(@games) %>
+
+    <%= render Ui::PaginationComponent.new(@games) %>
+  <% else %>
+    <%= render Ui::TextComponent.new do %>
+      <%= I18n.t("games.index.no_games") %> 
+    <% end %>
+  <% end %>
+</div>
