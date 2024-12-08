@@ -12,5 +12,8 @@ Rails.application.routes.draw do
   get "/auth/failure", to: redirect("/")
 
   resource :dashboard, only: [ :show ]
-  resources :games, only: [ :index, :new, :create ]
+
+  resources :games, only: [ :index, :new, :create ] do
+    post :accept, on: :member
+  end
 end

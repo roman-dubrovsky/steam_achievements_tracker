@@ -138,12 +138,20 @@ RSpec.describe "Games", type: :request do
       it 'creates a new game' do
         expect { do_request }.to change { Game.count }.by(1)
         expect(created_game.app_uid).to eq app_uid
+        expect(created_game.name).to eq game_info["name"]
+        expect(created_game.image).to eq game_info["header_image"]
       end
 
-      it 'renders confirmation form with ok status' do
+      it 'renders confirmation form with created status' do
         do_request
 
         expect(response).to have_http_status(:created)
+        expect(response.body).to include("Would you like to add this game for tracking achievements?")
+        expect(response.body).to include(created_game.name)
+      end
+
+      it 'does not add game to user games' do
+        expect { do_request }.not_to change { user.reload.games.count }
       end
     end
 
@@ -153,12 +161,21 @@ RSpec.describe "Games", type: :request do
 
       it 'does not create a new game and update current game info' do
         expect { do_request }.not_to change { Game.count }
+
+        expect(game.reload.name).to eq game_info["name"]
+        expect(game.image).to eq game_info["header_image"]
       end
 
       it 'renders confirmation form with ok status' do
         do_request
 
         expect(response).to have_http_status(:created)
+        expect(response.body).to include("Would you like to add this game for tracking achievements?")
+        expect(response.body).to include(game_info["name"])
+      end
+
+      it 'does not add game to user games' do
+        expect { do_request }.not_to change { user.reload.games.count }
       end
     end
 

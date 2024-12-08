@@ -12,6 +12,8 @@ en:
 
   title: Steam Achievements Tracker
   back: Back
+  add: Add
+  cancel: Cancel
 
   games:
     new:
@@ -20,3 +22,5 @@ en:
     find_or_create:
       no_found_error: Couldn't get connection with Steam Store service. Please, try to add the game later.
       no_all_params: Couldn't get all data about game via Steam Store Service. Please, contact support for resolving your issue.
+    accept:
+      header_question: Would you like to add this game for tracking achievements?

@@ -1,8 +1,8 @@
 <div class="flex justify-between">
-  <%= render Ui::Buttons::SecondaryComponent.new(path: :back, method: :get) do %>
+  <%= render Ui::Buttons::SecondaryComponent.new(path: back_path, method: :get) do %>
     <%= back || I18n.t("back") %>
   <% end %>
-  <%= render Ui::Buttons::PrimaryComponent.new(path: form) do %>
+  <%= render Ui::Buttons::PrimaryComponent.new(path: path) do %>
     <%= action || t(".submit") %>
   <% end %>
 </div>

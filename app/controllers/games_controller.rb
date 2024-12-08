@@ -20,7 +20,8 @@ class GamesController < ApplicationController
     result = Games::FindOrCreate.call(current_user, @game_form)
 
     if result.success
-      render plain: result.success.name, status: :created
+      @game = result.success
+      render :accept, status: :created
     else
       @error_message = result.failure
       render :new, status: :bad_request
