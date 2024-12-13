@@ -1,5 +1,7 @@
 class GamesController < ApplicationController
   def index
+    # ToDo: fix query. Ignoring N + 1 for now.
+    # I just need to get more info from other tables and going to fix it later.
     @games = current_user.games
       .paginate(page: params[:page])
   end

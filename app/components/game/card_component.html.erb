@@ -3,8 +3,15 @@
     <%= image_tag image %>
   </div>
   <div class="w-full mx-5 my-2">
-    <div class="font-extrabold text-lg">
+    <div class="font-extrabold text-lg mb-5">
       <h4><%= name %></h4>
+    </div>
+    <div class="flex space-x-4">
+      <div class="flex-1 p-2">
+        <%= render Game::Card::AchievementsInfoComponent.new(completed_count: 0, count: achievements_count) %>
+      </div>
+      <div class="flex-1 p-2">
+      </div>
     </div>
   </div>
 </div>
