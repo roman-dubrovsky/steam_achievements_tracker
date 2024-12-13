@@ -2,7 +2,6 @@
 
 class Game::CardComponent < ViewComponent::Base
   with_collection_parameter :game
-  attr_reader :game
 
   attr_reader :game
   delegate :name, :image, :completed_achievements_count, :achievements_count, to: :game
