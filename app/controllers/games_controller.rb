@@ -2,8 +2,10 @@ class GamesController < ApplicationController
   def index
     # ToDo: fix query. Ignoring N + 1 for now.
     # I just need to get more info from other tables and going to fix it later.
-    @games = current_user.games
+    query = current_user.games
       .paginate(page: params[:page])
+
+    @games = Games::ListPresenter.new(query, current_user)
   end
 
   def new
@@ -23,7 +25,7 @@ class GamesController < ApplicationController
     result = Games::FindOrCreate.call(current_user, @game_form)
 
     if result.success
-      @game = result.success
+      @game = Games::NewCardPresenter.new(game: result.success, user: current_user)
       render :accept, status: :created
     else
       @error_message = result.failure

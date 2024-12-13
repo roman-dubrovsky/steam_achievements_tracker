@@ -1,16 +1,21 @@
 RSpec.describe Game::CardComponent, type: :component do
-  subject(:rendered_component) { render_inline Game::CardComponent.new(game: game.reload) }
+  subject(:rendered_component) { render_inline Game::CardComponent.new(game: presenter) }
 
-  let(:game) { create(:game) }
+  let(:game) { build(:game) }
+  let(:user) { build(:user) }
+  let(:presenter) { Games::CardPresenter.new(game: game, user: user) }
 
-  let(:achievements_count) { rand(3..5) }
+  let(:completed_achievements_count) { rand(0..100) }
+  let(:achievements_count) { rand(0..100) }
 
   before do
-    achievements_count.times do
-      create(:achievement, game: game)
-    end
+    allow(presenter).to receive(:completed_achievements_count).and_return(completed_achievements_count)
+    allow(presenter).to receive(:achievements_count).and_return(achievements_count)
 
-    mock_component(Game::Card::AchievementsInfoComponent, completed_count: 0, count: achievements_count) do
+    mock_component(Game::Card::AchievementsInfoComponent,
+      completed_count: completed_achievements_count,
+      count: achievements_count
+    ) do
       "<li>Achievements</li>"
     end
   end

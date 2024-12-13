@@ -69,14 +69,14 @@ class Games::FindOrCreate
   end
 
   def achievements_info
-    @_achievements_info ||= api_store_client.achievements_info(app_uid) || []
+    @_achievements_info ||= api_steam_client.achievements_info(app_uid) || []
   end
 
   def game_info
     @_game_info ||= steam_store_client.game_info(app_uid)
   end
 
-  def api_store_client
+  def api_steam_client
     @_api_store_client ||= Steam::ApiClient.new(user)
   end
 

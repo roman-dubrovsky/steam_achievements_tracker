@@ -5,13 +5,9 @@ class Game::CardComponent < ViewComponent::Base
   attr_reader :game
 
   attr_reader :game
-  delegate :name, :image, to: :game
+  delegate :name, :image, :completed_achievements_count, :achievements_count, to: :game
 
   def initialize(game:)
     @game = game
-  end
-
-  def achievements_count
-    game.achievements.count
   end
 end

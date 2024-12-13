@@ -152,6 +152,18 @@ RSpec.describe "Games", type: :request do
       [ api_achievemt_params(attributes_for(:achievement)), api_achievemt_params(attributes_for(:hidden_achievement)) ]
     end
 
+    let(:user_achievements_info) do
+      achievements_info.to_a.map do |info|
+        completed = [ true, false ].sample
+
+        {
+          "apiname" => info["name"],
+          "achieved" => completed ? 1 : 0,
+          "unlocktime" => completed ? Faker::Time.backward(days: rand(1..1_000)).to_i : 0
+        }
+      end
+    end
+
     before do
       sign_in user if user.present?
 
@@ -169,6 +181,10 @@ RSpec.describe "Games", type: :request do
       allow(api_client).to receive(:achievements_info)
         .with(app_uid)
         .and_return(achievements_info)
+
+      allow(api_client).to receive(:achievements)
+        .with(app_uid)
+        .and_return(user_achievements_info)
     end
 
     context 'when the game has not been added before' do
