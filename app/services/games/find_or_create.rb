@@ -69,7 +69,7 @@ class Games::FindOrCreate
   end
 
   def achievements_info
-    @_achievements_info ||= api_store_client.achievements_info(app_uid)
+    @_achievements_info ||= api_store_client.achievements_info(app_uid) || []
   end
 
   def game_info

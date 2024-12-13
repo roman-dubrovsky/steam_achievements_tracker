@@ -195,12 +195,34 @@ RSpec.describe Games::FindOrCreate do
   context 'when couldn not find any information for steam achievements' do
     let(:achievements_info) { nil }
 
-    it 'does not return success result' do
-      expect(result.success).to be nil
+    let(:created_game) { Game.last }
+
+    it 'creates a new game' do
+      expect { result }.to change { Game.count }.by(1)
     end
 
-    it 'returns error message in the failure' do
-      expect(result.failure).to eq("Couldn't get connection with Steam Store service. Please, try to add the game later.")
+    it 'does not return failure result' do
+      expect(result.failure).to be nil
+    end
+
+    it 'returns created game as a result' do
+      expect(result.success).to eq(created_game)
+    end
+
+    it 'sets name for created game' do
+      expect(result.success.name).to eq game_info["name"]
+    end
+
+    it 'sets image for created game' do
+      expect(result.success.image).to eq game_info["header_image"]
+    end
+
+    it 'sets app uid for created game' do
+      expect(result.success.app_uid).to eq app_uid
+    end
+
+    it 'does not create new achievements' do
+      expect { result }.not_to change { Achievement.count }
     end
   end
 
