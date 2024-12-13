@@ -334,6 +334,45 @@ RSpec.describe "Games", type: :request do
         expect { do_request }.to change { user.reload.games.count }.by(1)
         expect(user.games.last).to eq game
       end
+
+      context 'when the game has some achievements' do
+        let(:count) { rand(3..5) }
+
+        let(:achievements) do
+          Array.new(count) do
+            create(:achievement, game: game)
+          end
+        end
+
+        let(:achievements_info) do
+          achievements.map do |record|
+            {
+              "apiname" => record.uid,
+              "achieved" => [ 0, 1 ].sample,
+              "unlocktime" => Faker::Time.backward(days: rand(1..100)).to_i
+            }
+          end
+        end
+
+        let(:steam_api_client) do
+          instance_double(Steam::ApiClient)
+        end
+
+        before do
+          allow(Steam::ApiClient).to receive(:new)
+            .with(user)
+            .and_return(steam_api_client)
+
+          allow(steam_api_client).to receive(:achievements)
+            .with(game.app_uid)
+            .and_return(achievements_info)
+        end
+
+        it 'adds achievements progress for the user game' do
+          expect { do_request }.to change { AchievementUser.count }.by(count)
+          expect(user.game_users.find_by(game: game).achievement_users.count).to eq count
+        end
+      end
     end
 
     context 'when the game is not found' do

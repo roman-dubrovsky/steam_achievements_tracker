@@ -8,5 +8,6 @@ RSpec.describe GameUser do
   describe "associations" do
     it { is_expected.to belong_to(:user) }
     it { is_expected.to belong_to(:game) }
+    it { is_expected.to have_many(:achievement_users).dependent(:destroy) }
   end
 end

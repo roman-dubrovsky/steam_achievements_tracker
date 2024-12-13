@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :achievement_user do
     achievement
-    user
+    game_user { association :game_user, game: achievement.game }
 
     factory :completed_achievement_user do
       completed { true }

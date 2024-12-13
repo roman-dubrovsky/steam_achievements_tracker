@@ -1,5 +1,5 @@
 class Games::CardPresenter
-  delegate :name, :image, to: :game
+  delegate :name, :image, :id, to: :game
 
   def initialize(user:, game:)
     @user = user
@@ -11,7 +11,7 @@ class Games::CardPresenter
   end
 
   def completed_achievements_count
-    0
+    game.game_users.find_by(user: user).achievement_users.completed.count
   end
 
   private
