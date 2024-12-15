@@ -2,7 +2,7 @@ require 'will_paginate/array'
 
 RSpec.describe Games::ListPresenter do
   subject(:presenter) do
-    described_class.new(relation, user)
+    described_class.new(relation)
   end
 
   let(:user) { instance_double(User) }
@@ -29,7 +29,15 @@ RSpec.describe Games::ListPresenter do
   context 'when relation has some items' do
     let(:count) { rand(1..10) }
 
-    let(:list) { Array.new(count) { instance_double(Game) } }
+    let(:list) do
+      Array.new(count) do
+        double(GameUser,
+          game: instance_double(Game), user: user,
+          achievements_count: 100,
+          completed_achievements_count: 0,
+        )
+      end
+    end
 
     its(:present?) { is_expected.to be true }
     its(:total_pages) { is_expected.to be total_pages }

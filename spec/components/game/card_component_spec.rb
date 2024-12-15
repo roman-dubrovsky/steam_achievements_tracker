@@ -1,9 +1,10 @@
 RSpec.describe Game::CardComponent, type: :component do
   subject(:rendered_component) { render_inline Game::CardComponent.new(game: presenter) }
 
-  let(:game) { build(:game) }
-  let(:user) { build(:user) }
-  let(:presenter) { Games::CardPresenter.new(game: game, user: user) }
+  let(:game) { game_user.game }
+  let(:game_user) { build(:game_user) }
+
+  let(:presenter) { Games::CardPresenter.new(game_user: game_user) }
 
   let(:completed_achievements_count) { rand(0..100) }
   let(:achievements_count) { rand(0..100) }

@@ -3,9 +3,7 @@ FactoryBot.define do
     achievement
     game_user { association :game_user, game: achievement.game }
 
-    factory :completed_achievement_user do
-      completed { true }
-      completed_at {  Faker::Time.backward(days: rand(1..100)) }
-    end
+    completed { [ false, true ].sample }
+    completed_at {  completed? ? Faker::Time.backward(days: rand(1..100)) : nil }
   end
 end

@@ -4,14 +4,17 @@ class Games::ListPresenter
   # for will_paginate
   delegate :total_pages, :current_page, to: :relation
 
-  def initialize(relation, user)
+  def initialize(relation)
     @relation = relation
-    @user = user
   end
 
   def info
-    @_games ||= relation.map do |game|
-      Games::CardPresenter.new(game: game, user: user)
+    @_games ||= relation.map do |game_user|
+      Games::CardPresenter.new(
+        game_user: game_user,
+        achievements_count: game_user.achievements_count,
+        completed_achievements_count: game_user.completed_achievements_count,
+      )
     end
   end
 
