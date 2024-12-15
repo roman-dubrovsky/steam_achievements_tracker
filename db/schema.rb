@@ -10,9 +10,34 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2024_12_03_053449) do
+ActiveRecord::Schema[8.0].define(version: 2024_12_13_080209) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "pg_catalog.plpgsql"
+
+  create_table "achievement_users", force: :cascade do |t|
+    t.bigint "achievement_id", null: false
+    t.bigint "game_user_id", null: false
+    t.boolean "completed", default: false
+    t.datetime "completed_at"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["achievement_id"], name: "index_achievement_users_on_achievement_id"
+    t.index ["game_user_id"], name: "index_achievement_users_on_game_user_id"
+  end
+
+  create_table "achievements", force: :cascade do |t|
+    t.bigint "game_id", null: false
+    t.string "uid"
+    t.string "name"
+    t.boolean "hidden", default: false, null: false
+    t.text "description"
+    t.text "notes"
+    t.string "icon"
+    t.string "icongray"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["game_id"], name: "index_achievements_on_game_id"
+  end
 
   create_table "game_users", force: :cascade do |t|
     t.bigint "user_id", null: false

@@ -1,0 +1,15 @@
+<div class="flex justify-between">
+  <h6 class="font-bold">
+    <%= t('.achievements') %>
+  </h6>
+  <span class="text-gray-200">
+    <%= t('.count', completed: completed_count, count: count) %>
+  </span>
+</div>
+<progress
+  value="<%= completed_count %>"
+  max="<%= count %>"
+  class="w-full h-6 bg-gray-800 rounded-lg overflow-hidden achievements-progress-bar"
+>
+  <%= "#{percent}%" %>
+</progress>

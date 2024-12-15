@@ -1,0 +1,4 @@
+en:
+  achievements: Achievements
+  count: "%{completed} from %{count}"
+  

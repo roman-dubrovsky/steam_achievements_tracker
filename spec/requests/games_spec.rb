@@ -148,6 +148,22 @@ RSpec.describe "Games", type: :request do
       }
     end
 
+    let(:achievements_info) do
+      [ api_achievemt_params(attributes_for(:achievement)), api_achievemt_params(attributes_for(:hidden_achievement)) ]
+    end
+
+    let(:user_achievements_info) do
+      achievements_info.to_a.map do |info|
+        completed = [ true, false ].sample
+
+        {
+          "apiname" => info["name"],
+          "achieved" => completed ? 1 : 0,
+          "unlocktime" => completed ? Faker::Time.backward(days: rand(1..1_000)).to_i : 0
+        }
+      end
+    end
+
     before do
       sign_in user if user.present?
 
@@ -161,6 +177,14 @@ RSpec.describe "Games", type: :request do
       allow(store_client).to receive(:game_info)
         .with(app_uid)
         .and_return(game_info)
+
+      allow(api_client).to receive(:achievements_info)
+        .with(app_uid)
+        .and_return(achievements_info)
+
+      allow(api_client).to receive(:achievements)
+        .with(app_uid)
+        .and_return(user_achievements_info)
     end
 
     context 'when the game has not been added before' do
@@ -171,6 +195,16 @@ RSpec.describe "Games", type: :request do
         expect(created_game.app_uid).to eq app_uid
         expect(created_game.name).to eq game_info["name"]
         expect(created_game.image).to eq game_info["header_image"]
+      end
+
+      it 'creates achievements for the game' do
+        expect { do_request }.to change { Achievement.count }.by(achievements_info.length)
+
+        achievements_info.each do |info|
+          achievement = created_game.achievements.find_by(uid: info["name"])
+          expect(achievement).to be_present
+          expect(achievement.name).to eq info["displayName"]
+        end
       end
 
       it 'renders confirmation form with created status' do
@@ -190,11 +224,27 @@ RSpec.describe "Games", type: :request do
       let!(:game) { create(:game) }
       let(:app_uid) { game.app_uid }
 
+      let(:achievements_info) do
+        [ api_achievemt_params(old_achievement), new_achievement_info ]
+      end
+
+      let(:old_achievement) { create(:achievement, game: game) }
+      let(:new_achievement_info) { api_achievemt_params(attributes_for(:achievement)) }
+
       it 'does not create a new game and update current game info' do
         expect { do_request }.not_to change { Game.count }
 
         expect(game.reload.name).to eq game_info["name"]
         expect(game.image).to eq game_info["header_image"]
+      end
+
+      it 'creates only new achievements for the game' do
+        expect { do_request }.to change { game.reload.achievements.count }.by(1)
+        expect(game.achievements.count).to be 2
+
+        achievement = game.achievements.find_by(uid: new_achievement_info["name"])
+        expect(achievement).to be_present
+        expect(achievement.name).to eq new_achievement_info["displayName"]
       end
 
       it 'renders confirmation form with ok status' do
@@ -283,6 +333,45 @@ RSpec.describe "Games", type: :request do
       it 'adds game for the user' do
         expect { do_request }.to change { user.reload.games.count }.by(1)
         expect(user.games.last).to eq game
+      end
+
+      context 'when the game has some achievements' do
+        let(:count) { rand(3..5) }
+
+        let(:achievements) do
+          Array.new(count) do
+            create(:achievement, game: game)
+          end
+        end
+
+        let(:achievements_info) do
+          achievements.map do |record|
+            {
+              "apiname" => record.uid,
+              "achieved" => [ 0, 1 ].sample,
+              "unlocktime" => Faker::Time.backward(days: rand(1..100)).to_i
+            }
+          end
+        end
+
+        let(:steam_api_client) do
+          instance_double(Steam::ApiClient)
+        end
+
+        before do
+          allow(Steam::ApiClient).to receive(:new)
+            .with(user)
+            .and_return(steam_api_client)
+
+          allow(steam_api_client).to receive(:achievements)
+            .with(game.app_uid)
+            .and_return(achievements_info)
+        end
+
+        it 'adds achievements progress for the user game' do
+          expect { do_request }.to change { AchievementUser.count }.by(count)
+          expect(user.game_users.find_by(game: game).achievement_users.count).to eq count
+        end
       end
     end
 
