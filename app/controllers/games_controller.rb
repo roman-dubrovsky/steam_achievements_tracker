@@ -2,8 +2,6 @@
 
 class GamesController < ApplicationController
   def index
-    # TODO: fix query. Ignoring N + 1 for now.
-    # I just need to get more info from other tables and going to fix it later.
     query = GameUsers::ListForUserQuery.call(current_user.game_users)
       .paginate(page: params[:page])
 

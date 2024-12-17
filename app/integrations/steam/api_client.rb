@@ -8,7 +8,7 @@ class Steam::ApiClient < Steam::BaseClient
   GAME_INFO_PATH = "ISteamUserStats/GetSchemaForGame/v2/"
 
   def initialize(user)
-    super
+    super()
     @user = user
   end
 
