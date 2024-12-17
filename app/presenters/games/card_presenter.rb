@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Games::CardPresenter
   delegate :name, :image, :id, to: :game
   delegate :user, :game, to: :game_user

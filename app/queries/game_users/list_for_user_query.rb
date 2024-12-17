@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class GameUsers::ListForUserQuery
   include Callable
 
@@ -25,7 +27,7 @@ class GameUsers::ListForUserQuery
     [
       "game_users.*",
       "COALESCE(achievements_counts.count, 0) AS achievements_count",
-      "COALESCE(achievements_counts.completed_count, 0) AS completed_achievements_count"
+      "COALESCE(achievements_counts.completed_count, 0) AS completed_achievements_count",
     ].join(", ")
   end
 
@@ -39,7 +41,7 @@ class GameUsers::ListForUserQuery
     [
       "game_users.id as game_user_id",
       "COUNT(game_users.id) as count",
-      "COUNT(CASE WHEN achievement_users.completed = TRUE THEN 1 END) AS completed_count"
+      "COUNT(CASE WHEN achievement_users.completed = TRUE THEN 1 END) AS completed_count",
     ].join(", ")
   end
 end

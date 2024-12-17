@@ -1,6 +1,8 @@
+# frozen_string_literal: true
+
 RSpec.describe Game::Card::AchievementsInfoComponent, type: :component do
   subject(:rendered_component) do
-    render_inline(described_class.new(completed_count: completed_count, count: count))
+    render_inline(described_class.new(completed_count:, count:))
   end
 
   let(:completed_count) { rand(0..100) }
@@ -15,13 +17,13 @@ RSpec.describe Game::Card::AchievementsInfoComponent, type: :component do
   it "renders the achievements count with the correct values" do
     expect(rendered_component).to have_css(
       "span.text-gray-200",
-      text: "#{completed_count} from #{count}"
+      text: "#{completed_count} from #{count}",
     )
   end
 
   it "renders the progress bar with the correct attributes" do
     expect(rendered_component).to have_css(
-      "progress.achievements-progress-bar[value='#{completed_count}'][max='#{count}']"
+      "progress.achievements-progress-bar[value='#{completed_count}'][max='#{count}']",
     )
   end
 
@@ -29,11 +31,11 @@ RSpec.describe Game::Card::AchievementsInfoComponent, type: :component do
     expect(rendered_component).to have_text("#{percent}%")
   end
 
-  describe 'when game does not have achievements' do
+  describe "when game does not have achievements" do
     let(:completed_count) { 0 }
     let(:count) { 0 }
 
-    it 'does not render component' do
+    it "does not render component" do
       expect(rendered_component.to_html).to be_empty
     end
   end

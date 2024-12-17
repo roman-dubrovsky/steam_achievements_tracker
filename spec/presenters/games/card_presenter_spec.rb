@@ -1,15 +1,17 @@
+# frozen_string_literal: true
+
 RSpec.describe Games::CardPresenter do
-  context 'when gets data from single entity' do
+  context "when gets data from single entity" do
     subject(:presenter) do
-      described_class.new(game_user: game_user)
+      described_class.new(game_user:)
     end
 
-    let(:game_user) { create(:game_user, game: game, user: user) }
+    let(:game_user) { create(:game_user, game:, user:) }
 
     before do
       achievements_count.times do
-        achievement = create(:achievement, game: game)
-        create(:achievement_user, game_user: game_user, achievement: achievement)
+        achievement = create(:achievement, game:)
+        create(:achievement_user, game_user:, achievement:)
       end
 
       AchievementUser.all.sample.update(completed: true)
@@ -21,12 +23,12 @@ RSpec.describe Games::CardPresenter do
     end
   end
 
-  context 'when gets data from a list query' do
+  context "when gets data from a list query" do
     subject(:presenter) do
       described_class.new(
-        game_user: build(:game_user, game: game, user: user),
-        completed_achievements_count: completed_achievements_count,
-        achievements_count: achievements_count
+        game_user: build(:game_user, game:, user:),
+        completed_achievements_count:,
+        achievements_count:,
       )
     end
 

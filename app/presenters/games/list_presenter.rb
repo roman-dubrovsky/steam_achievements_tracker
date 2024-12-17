@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Games::ListPresenter
   delegate :present?, to: :relation
 
@@ -9,9 +11,9 @@ class Games::ListPresenter
   end
 
   def info
-    @_games ||= relation.map do |game_user|
+    @_info ||= relation.map do |game_user|
       Games::CardPresenter.new(
-        game_user: game_user,
+        game_user:,
         achievements_count: game_user.achievements_count,
         completed_achievements_count: game_user.completed_achievements_count,
       )

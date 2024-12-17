@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 source "https://rubygems.org"
 
 gem "bootsnap", require: false
@@ -17,7 +19,7 @@ gem "stimulus-rails"
 gem "tailwindcss-rails"
 gem "thruster", require: false
 gem "turbo-rails"
-gem "tzinfo-data", platforms: %i[ windows jruby ]
+gem "tzinfo-data", platforms: %i[windows jruby]
 gem "view_component"
 gem "will_paginate", "~> 4.0"
 
@@ -34,12 +36,12 @@ gem "kamal", require: false
 
 group :development, :test do
   gem "brakeman", require: false
-  gem "debug", platforms: %i[ mri windows ], require: "debug/prelude"
+  gem "datarockets-style", "~> 1.6.0"
+  gem "debug", platforms: %i[mri windows], require: "debug/prelude"
   gem "factory_bot_rails"
   gem "faker"
   gem "pry-byebug"
   gem "rspec-rails", "~> 7.1.0"
-  gem "rubocop-rails-omakase", require: false
   gem "shoulda-matchers", "~> 6.0"
 end
 

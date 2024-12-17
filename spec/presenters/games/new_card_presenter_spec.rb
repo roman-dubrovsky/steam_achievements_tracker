@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 RSpec.describe Games::NewCardPresenter do
   subject(:presenter) do
-    described_class.new(user: user, game: game)
+    described_class.new(user:, game:)
   end
 
   before do
     achievements_count.times do
-      create(:achievement, game: game)
+      create(:achievement, game:)
     end
 
     allow(Games::CalculateCompletedAchievement).to receive(:call)

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe GameUsers::ListForUserQuery do
   subject(:query) do
     described_class.call(relation)
@@ -21,12 +23,12 @@ RSpec.describe GameUsers::ListForUserQuery do
       game_user = (some_game_users + user_game_users).sample
 
       achievement = create(:achievement, game: game_user.game)
-      create(:achievement_user, achievement: achievement, game_user: game_user)
+      create(:achievement_user, achievement:, game_user:)
     end
   end
 
-  it 'returns all game_user from relation (no filtering)' do
-    expect(query.pluck(:id)).to match_array([ game_user.id ] + other_game_users.map(&:id))
+  it "returns all game_user from relation (no filtering)" do
+    expect(query.pluck(:id)).to match_array([game_user.id] + other_game_users.map(&:id))
   end
 
   context "when game has completed achievements" do
@@ -36,46 +38,46 @@ RSpec.describe GameUsers::ListForUserQuery do
     before do
       achievements_count.times do
         achievement = create(:achievement, game: game_user.game)
-        create(:achievement_user, achievement: achievement, game_user: game_user, completed: false)
+        create(:achievement_user, achievement:, game_user:, completed: false)
       end
 
       completed_achivements.times do
         achievement = create(:achievement, game: game_user.game)
-        create(:achievement_user, achievement: achievement, game_user: game_user, completed: true)
+        create(:achievement_user, achievement:, game_user:, completed: true)
       end
     end
 
-    it 'returns game users list' do
+    it "returns game users list" do
       expect(query.pluck(:id)).to include(game_user.id)
     end
 
-    it 'has tested object in the result relation' do
-      expect(current_game_user).not_to be nil
+    it "has tested object in the result relation" do
+      expect(current_game_user).not_to be_nil
     end
 
-    it 'calculates number of achivements for the game' do
-      expect(current_game_user.achievements_count).to be (achievements_count + completed_achivements)
+    it "calculates number of achivements for the game" do
+      expect(current_game_user.achievements_count).to be(achievements_count + completed_achivements)
     end
 
-    it 'calculates number of completed achivements for the game' do
-      expect(current_game_user.completed_achievements_count).to be (completed_achivements)
+    it "calculates number of completed achivements for the game" do
+      expect(current_game_user.completed_achievements_count).to be(completed_achivements)
     end
   end
 
-  context 'when game does not have achivements' do
-    it 'returns game users list' do
+  context "when game does not have achivements" do
+    it "returns game users list" do
       expect(query.pluck(:id)).to include(game_user.id)
     end
 
-    it 'has tested object in the result relation' do
-      expect(current_game_user).not_to be nil
+    it "has tested object in the result relation" do
+      expect(current_game_user).not_to be_nil
     end
 
-    it 'calculates number of achivements for the game' do
+    it "calculates number of achivements for the game" do
       expect(current_game_user.achievements_count).to be 0
     end
 
-    it 'calculates number of completed achivements for the game' do
+    it "calculates number of completed achivements for the game" do
       expect(current_game_user.completed_achievements_count).to be 0
     end
   end

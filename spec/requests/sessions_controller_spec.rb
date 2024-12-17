@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe "Sessions", type: :request do
   describe "POST /auth/:provider/callback" do
     subject(:do_request) { post "/auth/steam/callback" }
@@ -7,8 +9,8 @@ RSpec.describe "Sessions", type: :request do
         "uid" => uid,
         "info" => {
           "nickname" => nickname,
-          "image" => image
-        }
+          "image" => image,
+        },
       }
     end
 
@@ -23,7 +25,7 @@ RSpec.describe "Sessions", type: :request do
 
     context "when the user does not exist" do
       it "creates a new user and signs them in" do
-        expect { do_request }.to change(User, :count).by(1)
+        expect { do_request }.to change { User.count }.by(1)
 
         user = User.last
         expect(user.steam_uid).to eq(auth_hash["uid"])
@@ -38,7 +40,7 @@ RSpec.describe "Sessions", type: :request do
       let!(:existing_user) { create(:user, steam_uid: uid) }
 
       it "signs in the user and updates their information" do
-        expect { do_request }.not_to change(User, :count)
+        expect { do_request }.not_to change { User.count }
 
         existing_user.reload
         expect(existing_user.nickname).to eq(auth_hash["info"]["nickname"])
@@ -77,14 +79,14 @@ RSpec.describe "Sessions", type: :request do
       expect(response.body).to include("Sign in with Steam")
     end
 
-    context 'when the user is logged in' do
+    context "when the user is logged in" do
       let(:user) { create(:user) }
 
       before do
         sign_in user
       end
 
-      it 'renders dashboard with logout button' do
+      it "renders dashboard with logout button" do
         do_request
 
         expect(response).to redirect_to(dashboard_path)

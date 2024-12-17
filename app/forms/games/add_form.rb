@@ -1,9 +1,11 @@
+# frozen_string_literal: true
+
 class Games::AddForm
   include ActiveModel::Model
 
   attr_accessor :app_uid
 
-  validates :app_uid, presence: true, inclusion: { in: ->(form) { form.game_ids } }
+  validates :app_uid, presence: true, inclusion: {in: ->(form) { form.game_ids }}
 
   def initialize(user)
     @user = user
@@ -14,7 +16,7 @@ class Games::AddForm
   end
 
   def game_ids
-    games_list.map { |info| info.dig("appid") }
+    games_list.pluck("appid")
   end
 
   private

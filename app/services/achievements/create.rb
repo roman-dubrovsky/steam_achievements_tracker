@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Achievements::Create
   include Callable
 
@@ -15,7 +17,7 @@ class Achievements::Create
       description: params["description"],
       icon: params["icon"],
       icongray: params["icongray"],
-      hidden: params["hidden"] == 1
+      hidden: params["hidden"] == 1,
     )
   end
 end

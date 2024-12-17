@@ -1,8 +1,36 @@
-# Omakase Ruby styling for Rails
-inherit_gem: { rubocop-rails-omakase: rubocop.yml }
+inherit_gem:
+  datarockets-style:
+    - config/rails.yml
+    - config/rails-locales.yml
+    - config/rspec.yml
 
-Bundler/DuplicatedGem:
-  Enabled: true
+Lint/MissingSuper:
+  Exclude: 
+    - 'app/components/**/*'
 
-Bundler/OrderedGems:
-  TreatCommentsAsGroupSeparators: true
+Metrics/AbcSize:
+  Exclude:
+    - 'app/services/games/add_to_user.rb'
+
+Style/ClassAndModuleChildren:
+  EnforcedStyle: compact
+
+Rails/OutputSafety:
+  Exclude:
+    - 'spec/support/view_component_mock.rb'
+
+Rails/UniqueValidationWithoutIndex:
+  Enabled: false
+
+RSpec/IndexedLet:
+  Exclude:
+    - 'spec/requests/**/*'
+
+RSpec/MultipleExpectations:
+  Exclude:
+    - "spec/components/**/*"
+    - "spec/requests/**/*"
+
+RSpec/VerifiedDoubles:
+  Exclude:
+    - "spec/presenters/games/list_presenter_spec.rb"

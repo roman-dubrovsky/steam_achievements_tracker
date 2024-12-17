@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Games::AddForm do
   subject(:form) { described_class.new(user) }
 
@@ -5,8 +7,8 @@ RSpec.describe Games::AddForm do
 
   let(:games) do
     [
-      { "appid" => "id1", "name" => "Game 1" },
-      { "appid" => "id2", "name" => "Game 2" }
+      {"appid" => "id1", "name" => "Game 1"},
+      {"appid" => "id2", "name" => "Game 2"},
     ]
   end
 
@@ -24,7 +26,7 @@ RSpec.describe Games::AddForm do
 
   describe "#game_ids" do
     its(:game_ids) do
-      is_expected.to match_array([ "id1", "id2" ])
+      is_expected.to match_array(%w[id1 id2])
     end
   end
 
@@ -32,18 +34,18 @@ RSpec.describe Games::AddForm do
     let(:app_uid) { "id1" }
 
     before do
-      form.assign_attributes(app_uid: app_uid)
+      form.assign_attributes(app_uid:)
     end
 
     its(:valid?) { is_expected.to be true }
 
-    context 'when app_uid is not present' do
+    context "when app_uid is not present" do
       let(:app_uid) { "" }
 
       its(:valid?) { is_expected.to be false }
     end
 
-    context 'when app_uid is not from games list' do
+    context "when app_uid is not from games list" do
       let(:app_uid) { "some another id" }
 
       its(:valid?) { is_expected.to be false }

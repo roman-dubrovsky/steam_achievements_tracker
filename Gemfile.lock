@@ -109,6 +109,11 @@ GEM
       activerecord (>= 5.a)
       database_cleaner-core (~> 2.0.0)
     database_cleaner-core (2.0.1)
+    datarockets-style (1.6.0)
+      rubocop (~> 1.65.1)
+      rubocop-graphql (~> 1.5.4)
+      rubocop-rails (~> 2.26)
+      rubocop-rspec (~> 3.0.4)
     date (3.4.1)
     debug (1.9.2)
       irb (~> 1.10)
@@ -162,7 +167,7 @@ GEM
     jbuilder (2.13.0)
       actionview (>= 5.0.0)
       activesupport (>= 5.0.0)
-    json (2.8.2)
+    json (2.9.0)
     kamal (2.4.0)
       activesupport (>= 7.0)
       base64 (~> 0.2)
@@ -329,34 +334,28 @@ GEM
       rspec-mocks (~> 3.13)
       rspec-support (~> 3.13)
     rspec-support (3.13.1)
-    rubocop (1.68.0)
+    rubocop (1.65.1)
       json (~> 2.3)
       language_server-protocol (>= 3.17.0)
       parallel (~> 1.10)
       parser (>= 3.3.0.2)
       rainbow (>= 2.2.2, < 4.0)
       regexp_parser (>= 2.4, < 3.0)
-      rubocop-ast (>= 1.32.2, < 2.0)
+      rexml (>= 3.2.5, < 4.0)
+      rubocop-ast (>= 1.31.1, < 2.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 2.4.0, < 3.0)
-    rubocop-ast (1.36.1)
+    rubocop-ast (1.37.0)
       parser (>= 3.3.1.0)
-    rubocop-minitest (0.36.0)
-      rubocop (>= 1.61, < 2.0)
-      rubocop-ast (>= 1.31.1, < 2.0)
-    rubocop-performance (1.23.0)
-      rubocop (>= 1.48.1, < 2.0)
-      rubocop-ast (>= 1.31.1, < 2.0)
+    rubocop-graphql (1.5.4)
+      rubocop (>= 1.50, < 2)
     rubocop-rails (2.27.0)
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.52.0, < 2.0)
       rubocop-ast (>= 1.31.1, < 2.0)
-    rubocop-rails-omakase (1.0.0)
-      rubocop
-      rubocop-minitest
-      rubocop-performance
-      rubocop-rails
+    rubocop-rspec (3.0.5)
+      rubocop (~> 1.61)
     ruby-openid (2.9.2)
     ruby-progressbar (1.13.0)
     securerandom (0.4.1)
@@ -451,6 +450,7 @@ DEPENDENCIES
   brakeman
   capybara
   database_cleaner-active_record
+  datarockets-style (~> 1.6.0)
   debug
   devise (~> 4.9)
   dry-monads
@@ -469,7 +469,6 @@ DEPENDENCIES
   rexml
   rspec-its
   rspec-rails (~> 7.1.0)
-  rubocop-rails-omakase
   shoulda-matchers (~> 6.0)
   simple_form
   simplecov

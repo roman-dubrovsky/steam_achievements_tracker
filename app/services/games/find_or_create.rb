@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Games::FindOrCreate
   include Callable
   include Dry::Monads[:result, :do]
@@ -30,7 +32,7 @@ class Games::FindOrCreate
   end
 
   def find_achievements_info
-    !achievements_info.nil? ? Success() :Failure(I18n.t("games.find_or_create.no_found_error"))
+    achievements_info.nil? ? Failure(I18n.t("games.find_or_create.no_found_error")) : Success()
   end
 
   def update_game
@@ -38,7 +40,7 @@ class Games::FindOrCreate
       game.save!
 
       achievements_info.each do |info|
-        !existed_achievements.include?(info["name"]) && Achievements::Create.call(game, info)
+        existed_achievements.exclude?(info["name"]) && Achievements::Create.call(game, info)
       end
     end
 
@@ -46,12 +48,7 @@ class Games::FindOrCreate
   end
 
   def assign_game_params
-    if game_info.present?
-      game.assign_attributes(
-        name: game_info["name"],
-        image: game_info["header_image"]
-      )
-    end
+    game.assign_attributes(game_params) if game_info.present?
 
     if game.valid?
       Success()
@@ -60,12 +57,19 @@ class Games::FindOrCreate
     end
   end
 
+  def game_params
+    {
+      name: game_info["name"],
+      image: game_info["header_image"],
+    }
+  end
+
   def game
-    @_game ||= Game.find_or_initialize_by(app_uid: app_uid)
+    @_game ||= Game.find_or_initialize_by(app_uid:)
   end
 
   def existed_achievements
-    @_existed_achievements ||= game.achievements.map(&:uid).to_set
+    @_existed_achievements ||= game.achievements.to_set(&:uid)
   end
 
   def achievements_info
@@ -77,7 +81,7 @@ class Games::FindOrCreate
   end
 
   def api_steam_client
-    @_api_store_client ||= Steam::ApiClient.new(user)
+    @_api_steam_client ||= Steam::ApiClient.new(user)
   end
 
   def steam_store_client

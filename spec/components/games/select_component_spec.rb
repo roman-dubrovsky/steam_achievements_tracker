@@ -1,16 +1,18 @@
+# frozen_string_literal: true
+
 RSpec.describe Games::SelectComponent, type: :component do
   subject(:rendered_component) do
-    render_inline(described_class.new(form: form, attribute: attribute, games: games))
+    render_inline(described_class.new(form:, attribute:, games:))
   end
 
   let(:games) do
     [
-      { "appid" => 1, "name" => "Game 1" },
-      { "appid" => 2, "name" => "Game 2" }
+      {"appid" => 1, "name" => "Game 1"},
+      {"appid" => 2, "name" => "Game 2"},
     ]
   end
 
-  let(:form) { double("FormBuilder") } # Mock for SimpleForm builder
+  let(:form) { instance_double(SimpleForm::FormBuilder) }
   let(:attribute) { :app_id }
 
   before do
@@ -38,6 +40,8 @@ RSpec.describe Games::SelectComponent, type: :component do
   it "applies Tailwind CSS classes" do
     expect(rendered_component).to have_css("div.relative.w-full")
     expect(rendered_component).to have_css("input.form-input.w-full.border.border-gray-300.rounded-lg.p-2")
-    expect(rendered_component).to have_css("ul.absolute.bg-white.border.border-gray-300.mt-1.w-full.rounded-lg.shadow-lg.z-10")
+    expect(rendered_component).to have_css(
+      "ul.absolute.bg-white.border.border-gray-300.mt-1.w-full.rounded-lg.shadow-lg.z-10",
+    )
   end
 end

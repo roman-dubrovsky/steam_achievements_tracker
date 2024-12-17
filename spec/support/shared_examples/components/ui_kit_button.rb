@@ -1,11 +1,13 @@
+# frozen_string_literal: true
+
 RSpec.shared_examples "UIkits button" do |specific_classes|
+  subject do
+    render_inline(described_class.new(path:, method:)) { content }
+  end
+
   let(:path) { "/test_path" }
   let(:method) { :delete }
   let(:content) { "Click Me" }
-
-  subject do
-    render_inline(described_class.new(path: path, method: method)) { content }
-  end
 
   context "when renders a button" do
     it "renders the button with the correct path" do
@@ -18,7 +20,7 @@ RSpec.shared_examples "UIkits button" do |specific_classes|
 
     it "applies the correct CSS classes" do
       expect(subject).to have_css(
-        "button.py-2.px-4.rounded-xl.flex.justify-between.items-center.#{specific_classes}"
+        "button.py-2.px-4.rounded-xl.flex.justify-between.items-center.#{specific_classes}",
       )
     end
 
@@ -36,7 +38,7 @@ RSpec.shared_examples "UIkits button" do |specific_classes|
 
     it "applies the correct CSS classes" do
       expect(subject).to have_css(
-        "a.py-2.px-4.rounded-xl.flex.justify-between.items-center.#{specific_classes}"
+        "a.py-2.px-4.rounded-xl.flex.justify-between.items-center.#{specific_classes}",
       )
     end
 
@@ -48,13 +50,13 @@ RSpec.shared_examples "UIkits button" do |specific_classes|
   context "when renders button for form builder" do
     let(:path) { builder }
 
-    let(:form_object) { instance_double("FormObject") }
+    let(:form_object) { instance_double(SimpleForm::FormBuilder) }
     let(:view_context) { ActionView::Base.new(ActionController::Base.view_paths, {}, self) }
     let(:builder) { SimpleForm::FormBuilder.new(:example, form_object, view_context, {}) }
 
     it "applies the correct CSS classes" do
       expect(subject).to have_css(
-        "button.py-2.px-4.rounded-xl.flex.justify-between.items-center.#{specific_classes}"
+        "button.py-2.px-4.rounded-xl.flex.justify-between.items-center.#{specific_classes}",
       )
     end
 

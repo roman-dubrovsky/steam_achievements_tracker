@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Achievement do
   subject { build(:achievement) }
 
