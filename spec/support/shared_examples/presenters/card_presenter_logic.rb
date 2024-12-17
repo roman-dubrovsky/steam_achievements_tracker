@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.shared_examples "Games::CardPresenter logic" do
   let(:user) { build(:user) }
   let(:game) { build(:game) }

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Game do
   describe "validations" do
     it { is_expected.to validate_presence_of(:app_uid) }

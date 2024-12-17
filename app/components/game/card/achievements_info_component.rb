@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Game::Card::AchievementsInfoComponent < ViewComponent::Base
   attr_reader :completed_count, :count
 
@@ -11,6 +13,6 @@ class Game::Card::AchievementsInfoComponent < ViewComponent::Base
   end
 
   def render?
-    count > 0
+    count.positive?
   end
 end

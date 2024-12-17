@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Games::CalculateCompletedAchievement do
   subject do
     described_class.call(user, game)
@@ -18,20 +20,20 @@ RSpec.describe Games::CalculateCompletedAchievement do
       .and_return(achievements_info)
   end
 
-  context 'when game has achievements' do
+  context "when game has achievements" do
     let(:uncompleted_count) { rand(1..100) }
     let(:completed_count) { rand(1..100) }
 
     let(:uncompleted_achievements) do
-      Array.new(uncompleted_count) {
-        { "achieved" => 0 }
-      }
+      Array.new(uncompleted_count) do
+        {"achieved" => 0}
+      end
     end
 
     let(:completed_achievements) do
-      Array.new(completed_count) {
-        { "achieved" => 1 }
-      }
+      Array.new(completed_count) do
+        {"achieved" => 1}
+      end
     end
 
     let(:achievements_info) { (completed_achievements + uncompleted_achievements).shuffle }
@@ -39,13 +41,13 @@ RSpec.describe Games::CalculateCompletedAchievement do
     it { is_expected.to be completed_count }
   end
 
-  context 'when game does not have achievements' do
+  context "when game does not have achievements" do
     let(:achievements_info) { [] }
 
     it { is_expected.to be 0 }
   end
 
-  context 'when steam API does not return achievements info (for old games)' do
+  context "when steam API does not return achievements info (for old games)" do
     let(:achievements_info) { nil }
 
     it { is_expected.to be 0 }

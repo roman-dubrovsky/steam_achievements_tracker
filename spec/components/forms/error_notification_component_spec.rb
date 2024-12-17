@@ -1,7 +1,9 @@
-RSpec.describe Forms::ErrorNotificationComponent, type: :component do
-  subject(:render) { render_inline described_class.new(message: message) }
+# frozen_string_literal: true
 
-  context 'when message is passed' do
+RSpec.describe Forms::ErrorNotificationComponent, type: :component do
+  subject(:render) { render_inline described_class.new(message:) }
+
+  context "when message is passed" do
     let(:message) { "Game could not be added due to invalid input" }
 
     it "renders the error notification with the given message" do

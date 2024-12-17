@@ -15,6 +15,10 @@ en:
   add: Add
   cancel: Cancel
 
+  sessions:
+    destroy:
+      logout: You have been logged out successfully.
+
   games:
     index:
       games: Games

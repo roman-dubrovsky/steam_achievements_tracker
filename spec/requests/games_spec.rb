@@ -1,4 +1,6 @@
-require 'rails_helper'
+# frozen_string_literal: true
+
+require "rails_helper"
 
 RSpec.describe "Games", type: :request do
   describe "GET /games" do
@@ -10,13 +12,13 @@ RSpec.describe "Games", type: :request do
       sign_in user if user.present?
     end
 
-    context 'when the are some games assotiate to the user' do
+    context "when the are some games assotiate to the user" do
       let(:game1) { create(:game) }
       let(:game2) { create(:game) }
 
       before do
-        create(:game_user, game: game1, user: user)
-        create(:game_user, game: game2, user: user)
+        create(:game_user, game: game1, user:)
+        create(:game_user, game: game2, user:)
       end
 
       it "renders the page" do
@@ -27,7 +29,7 @@ RSpec.describe "Games", type: :request do
         expect(response.body).to include("Add new game")
       end
 
-      it 'renders games title' do
+      it "renders games title" do
         do_request
 
         expect(response.body).to include(game1.name)
@@ -35,7 +37,7 @@ RSpec.describe "Games", type: :request do
       end
     end
 
-    context 'when the user does not have any associated games' do
+    context "when the user does not have any associated games" do
       it "renders the page" do
         do_request
 
@@ -44,17 +46,17 @@ RSpec.describe "Games", type: :request do
         expect(response.body).to include("Add new game")
       end
 
-      it 'renders games title' do
+      it "renders games title" do
         do_request
 
         expect(response.body).to include("You have not added games for tracking yet.")
       end
     end
 
-    context 'when the user in not logged in' do
+    context "when the user in not logged in" do
       let(:user) { nil }
 
-      it 'renders dashboard with logout button' do
+      it "renders dashboard with logout button" do
         do_request
 
         expect(response).to redirect_to(root_path)
@@ -66,15 +68,15 @@ RSpec.describe "Games", type: :request do
     subject(:do_request) { get "/games/new" }
 
     let(:steam_api_client) do
-      instance_double(Steam::ApiClient, games: games)
+      instance_double(Steam::ApiClient, games:)
     end
 
     let(:user) { create(:user) }
 
     let(:games) do
       [
-        { "appid" => 1, "name" => "Game 1" },
-        { "appid" => 2, "name" => "Game 2" }
+        {"appid" => 1, "name" => "Game 1"},
+        {"appid" => 2, "name" => "Game 2"},
       ]
     end
 
@@ -84,7 +86,7 @@ RSpec.describe "Games", type: :request do
         .and_return(steam_api_client)
     end
 
-    context 'when the user is logged in' do
+    context "when the user is logged in" do
       before do
         sign_in user
       end
@@ -96,7 +98,7 @@ RSpec.describe "Games", type: :request do
         expect(response.body).to include("Add new game")
       end
 
-      context 'when there are not games which can be added' do
+      context "when there are not games which can be added" do
         let(:games) { [] }
 
         it "renders error message" do
@@ -108,8 +110,8 @@ RSpec.describe "Games", type: :request do
       end
     end
 
-    context 'when the user is not logged in' do
-      it 'renders dashboard with logout button' do
+    context "when the user is not logged in" do
+      it "renders dashboard with logout button" do
         do_request
 
         expect(response).to redirect_to(root_path)
@@ -118,11 +120,11 @@ RSpec.describe "Games", type: :request do
   end
 
   describe "POST /games" do
-    subject(:do_request) { post "/games", params: { games_add_form: games_params } }
+    subject(:do_request) { post "/games", params: {games_add_form: games_params} }
 
     let(:games_params) do
       {
-        app_uid: app_uid
+        app_uid:,
       }
     end
 
@@ -134,32 +136,32 @@ RSpec.describe "Games", type: :request do
 
     let(:steam_games) do
       [
-        { "appid" => Faker::Crypto.md5 },
-        { "appid" => app_uid },
-        { "appid" => Faker::Crypto.md5 },
-        { "appid" => Faker::Crypto.md5 }
+        {"appid" => Faker::Crypto.md5},
+        {"appid" => app_uid},
+        {"appid" => Faker::Crypto.md5},
+        {"appid" => Faker::Crypto.md5},
       ]
     end
 
     let(:game_info) do
       {
         "name" => Faker::App.name,
-        "header_image" => Faker::Internet.url
+        "header_image" => Faker::Internet.url,
       }
     end
 
     let(:achievements_info) do
-      [ api_achievemt_params(attributes_for(:achievement)), api_achievemt_params(attributes_for(:hidden_achievement)) ]
+      [api_achievemt_params(attributes_for(:achievement)), api_achievemt_params(attributes_for(:hidden_achievement))]
     end
 
     let(:user_achievements_info) do
       achievements_info.to_a.map do |info|
-        completed = [ true, false ].sample
+        completed = [true, false].sample
 
         {
           "apiname" => info["name"],
           "achieved" => completed ? 1 : 0,
-          "unlocktime" => completed ? Faker::Time.backward(days: rand(1..1_000)).to_i : 0
+          "unlocktime" => completed ? Faker::Time.backward(days: rand(1..1_000)).to_i : 0,
         }
       end
     end
@@ -187,17 +189,17 @@ RSpec.describe "Games", type: :request do
         .and_return(user_achievements_info)
     end
 
-    context 'when the game has not been added before' do
+    context "when the game has not been added before" do
       let(:created_game) { Game.last }
 
-      it 'creates a new game' do
+      it "creates a new game" do
         expect { do_request }.to change { Game.count }.by(1)
         expect(created_game.app_uid).to eq app_uid
         expect(created_game.name).to eq game_info["name"]
         expect(created_game.image).to eq game_info["header_image"]
       end
 
-      it 'creates achievements for the game' do
+      it "creates achievements for the game" do
         expect { do_request }.to change { Achievement.count }.by(achievements_info.length)
 
         achievements_info.each do |info|
@@ -207,7 +209,7 @@ RSpec.describe "Games", type: :request do
         end
       end
 
-      it 'renders confirmation form with created status' do
+      it "renders confirmation form with created status" do
         do_request
 
         expect(response).to have_http_status(:created)
@@ -215,30 +217,30 @@ RSpec.describe "Games", type: :request do
         expect(response.body).to include(created_game.name)
       end
 
-      it 'does not add game to user games' do
+      it "does not add game to user games" do
         expect { do_request }.not_to change { user.reload.games.count }
       end
     end
 
-    context 'when the game has been added to the system before but not for the user' do
+    context "when the game has been added to the system before but not for the user" do
       let!(:game) { create(:game) }
       let(:app_uid) { game.app_uid }
 
       let(:achievements_info) do
-        [ api_achievemt_params(old_achievement), new_achievement_info ]
+        [api_achievemt_params(old_achievement), new_achievement_info]
       end
 
-      let(:old_achievement) { create(:achievement, game: game) }
+      let(:old_achievement) { create(:achievement, game:) }
       let(:new_achievement_info) { api_achievemt_params(attributes_for(:achievement)) }
 
-      it 'does not create a new game and update current game info' do
+      it "does not create a new game and update current game info" do
         expect { do_request }.not_to change { Game.count }
 
         expect(game.reload.name).to eq game_info["name"]
         expect(game.image).to eq game_info["header_image"]
       end
 
-      it 'creates only new achievements for the game' do
+      it "creates only new achievements for the game" do
         expect { do_request }.to change { game.reload.achievements.count }.by(1)
         expect(game.achievements.count).to be 2
 
@@ -247,7 +249,7 @@ RSpec.describe "Games", type: :request do
         expect(achievement.name).to eq new_achievement_info["displayName"]
       end
 
-      it 'renders confirmation form with ok status' do
+      it "renders confirmation form with ok status" do
         do_request
 
         expect(response).to have_http_status(:created)
@@ -255,56 +257,56 @@ RSpec.describe "Games", type: :request do
         expect(response.body).to include(game_info["name"])
       end
 
-      it 'does not add game to user games' do
+      it "does not add game to user games" do
         expect { do_request }.not_to change { user.reload.games.count }
       end
     end
 
-    context 'when game has been already added for the user' do
+    context "when game has been already added for the user" do
       let(:game) { create(:game) }
       let(:app_uid) { game.app_uid }
 
       before do
-        create(:game_user, game: game, user: user)
+        create(:game_user, game:, user:)
       end
 
-      it 'renders form with error message' do
+      it "renders form with error message" do
         do_request
 
         expect(response).to have_http_status(:bad_request)
       end
     end
 
-    context 'when app uid is not valid' do
+    context "when app uid is not valid" do
       let(:steam_games) do
         [
-          { "appid" => Faker::Crypto.md5 },
-          { "appid" => Faker::Crypto.md5 },
-          { "appid" => Faker::Crypto.md5 }
+          {"appid" => Faker::Crypto.md5},
+          {"appid" => Faker::Crypto.md5},
+          {"appid" => Faker::Crypto.md5},
         ]
       end
 
-      it 'renders form with error message' do
+      it "renders form with error message" do
         do_request
 
         expect(response).to have_http_status(:bad_request)
       end
     end
 
-    context 'when app uid is not pass' do
+    context "when app uid is not pass" do
       let(:app_uid) { "" }
 
-      it 'renders form with error message' do
+      it "renders form with error message" do
         do_request
 
         expect(response).to have_http_status(:bad_request)
       end
     end
 
-    context 'when the user is not logged in' do
+    context "when the user is not logged in" do
       let(:user) { nil }
 
-      it 'renders dashboard with logout button' do
+      it "renders dashboard with logout button" do
         do_request
 
         expect(response).to redirect_to(root_path)
@@ -323,24 +325,24 @@ RSpec.describe "Games", type: :request do
       sign_in user if user.present?
     end
 
-    context 'when game can be added' do
-      it 'redirects to games list path' do
+    context "when game can be added" do
+      it "redirects to games list path" do
         do_request
 
         expect(response).to redirect_to(games_path)
       end
 
-      it 'adds game for the user' do
+      it "adds game for the user" do
         expect { do_request }.to change { user.reload.games.count }.by(1)
         expect(user.games.last).to eq game
       end
 
-      context 'when the game has some achievements' do
+      context "when the game has some achievements" do
         let(:count) { rand(3..5) }
 
         let(:achievements) do
           Array.new(count) do
-            create(:achievement, game: game)
+            create(:achievement, game:)
           end
         end
 
@@ -348,8 +350,8 @@ RSpec.describe "Games", type: :request do
           achievements.map do |record|
             {
               "apiname" => record.uid,
-              "achieved" => [ 0, 1 ].sample,
-              "unlocktime" => Faker::Time.backward(days: rand(1..100)).to_i
+              "achieved" => [0, 1].sample,
+              "unlocktime" => Faker::Time.backward(days: rand(1..100)).to_i,
             }
           end
         end
@@ -368,27 +370,27 @@ RSpec.describe "Games", type: :request do
             .and_return(achievements_info)
         end
 
-        it 'adds achievements progress for the user game' do
+        it "adds achievements progress for the user game" do
           expect { do_request }.to change { AchievementUser.count }.by(count)
-          expect(user.game_users.find_by(game: game).achievement_users.count).to eq count
+          expect(user.game_users.find_by(game:).achievement_users.count).to eq count
         end
       end
     end
 
-    context 'when the game is not found' do
-      let(:game_id) { 'fake' }
+    context "when the game is not found" do
+      let(:game_id) { "fake" }
 
-      it 'renders dashboard with logout button' do
+      it "renders dashboard with logout button" do
         do_request
 
         expect(response).to have_http_status(:not_found)
       end
     end
 
-    context 'when the user in not logged in' do
+    context "when the user in not logged in" do
       let(:user) { nil }
 
-      it 'renders dashboard with logout button' do
+      it "renders dashboard with logout button" do
         do_request
 
         expect(response).to redirect_to(root_path)

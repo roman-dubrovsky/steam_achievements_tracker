@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe AchievementUser do
   describe "associations" do
     it { is_expected.to belong_to(:game_user) }

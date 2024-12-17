@@ -17,7 +17,7 @@ class Ui::Buttons::BaseComponent < ViewComponent::Base
   end
 
   def button_classes
-    [ common_classes, styles ].join(" ")
+    [common_classes, styles].join(" ")
   end
 
   def common_classes

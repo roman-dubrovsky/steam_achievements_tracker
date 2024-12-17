@@ -1,4 +1,6 @@
-require 'will_paginate/array'
+# frozen_string_literal: true
+
+require "will_paginate/array"
 
 RSpec.describe Games::ListPresenter do
   subject(:presenter) do
@@ -13,11 +15,10 @@ RSpec.describe Games::ListPresenter do
   let(:current_page) { rand(1..2) }
 
   before do
-    allow(relation).to receive(:total_pages).and_return(total_pages)
-    allow(relation).to receive(:current_page).and_return(current_page)
+    allow(relation).to receive_messages(total_pages:, current_page:)
   end
 
-  context 'when relation is empty' do
+  context "when relation is empty" do
     let(:list) { [] }
 
     its(:present?) { is_expected.to be false }
@@ -26,16 +27,15 @@ RSpec.describe Games::ListPresenter do
     its(:info) { is_expected.to eq([]) }
   end
 
-  context 'when relation has some items' do
+  context "when relation has some items" do
     let(:count) { rand(1..10) }
 
     let(:list) do
       Array.new(count) do
         double(GameUser,
-          game: instance_double(Game), user: user,
+          game: instance_double(Game), user:,
           achievements_count: 100,
-          completed_achievements_count: 0,
-        )
+          completed_achievements_count: 0)
       end
     end
 
@@ -44,7 +44,7 @@ RSpec.describe Games::ListPresenter do
     its(:current_page) { is_expected.to be current_page }
     its(:info) { is_expected.to all(be_an_instance_of(Games::CardPresenter)) }
 
-    it 'returns correct number of games' do
+    it "returns correct number of games" do
       expect(presenter.info.size).to eq count
     end
   end

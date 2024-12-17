@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class Games::GetListForAdding
   include Callable
 
@@ -24,7 +26,7 @@ class Games::GetListForAdding
       .map do |info|
         {
           "appid" => info["appid"].to_s,
-          "name" => info["name"]
+          "name" => info["name"],
         }
       end
   end

@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 RSpec.describe Users::FindViaSteam do
   subject(:service_call) { described_class.call(auth) }
 
@@ -6,8 +8,8 @@ RSpec.describe Users::FindViaSteam do
       "uid" => uid,
       "info" => {
         "nickname" => nickname,
-        "image" => image
-      }
+        "image" => image,
+      },
     }
   end
 
@@ -39,7 +41,7 @@ RSpec.describe Users::FindViaSteam do
       let(:created_user) { User.last }
 
       it "creates a new user" do
-        expect { service_call }.to change(User, :count).by(1)
+        expect { service_call }.to change { User.count }.by(1)
       end
 
       it "returns the created user" do

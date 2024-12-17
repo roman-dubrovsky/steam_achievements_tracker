@@ -1,8 +1,13 @@
+# frozen_string_literal: true
+
 class SessionsController < ApplicationController
   skip_before_action :verify_authenticity_token
-  skip_before_action :authenticate_user!, only: [ :create, :new ]
+  skip_before_action :authenticate_user!, only: %i[create new]
 
-  before_action :redirect_if_signed_in, only: [ :create, :new ]
+  before_action :redirect_if_signed_in, only: %i[create new]
+
+  def new
+  end
 
   def create
     auth = request.env["omniauth.auth"]
@@ -13,10 +18,7 @@ class SessionsController < ApplicationController
 
   def destroy
     sign_out_and_redirect(current_user)
-    flash[:notice] = "You have been logged out successfully."
-  end
-
-  def new
+    flash.now[:notice] = I18n.t("sessions.destroy.logout")
   end
 
   private
