@@ -10,7 +10,7 @@ gem "omniauth-steam"
 gem "pg", "~> 1.1"
 gem "propshaft" # The modern asset pipeline for Rails [https://github.com/rails/propshaft]
 gem "puma", ">= 5.0"
-gem "rails", "~> 8.0.0"
+gem "rails", "~> 8.0.1"
 gem "rexml"
 gem "simple_form"
 gem "stimulus-rails"
