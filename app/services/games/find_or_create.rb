@@ -1,22 +1,22 @@
 # frozen_string_literal: true
 
-class Games::FindOrCreate
+class Games::FindOrCreate < Dry::Operation
   include Callable
-  include Dry::Monads[:result, :do]
 
   attr_reader :user, :form
 
   def initialize(user, form)
+    super()
     @user = user
     @form = form
   end
 
   def call
-    yield validate_form
-    yield find_game_info
-    yield assign_game_params
-    yield find_achievements_info
-    update_game
+    step validate_form
+    step find_game_info
+    step assign_game_params
+    step find_achievements_info
+    step update_game
   end
 
   private
